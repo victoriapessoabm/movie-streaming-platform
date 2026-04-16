@@ -45,8 +45,9 @@ Scenario: Login com perfil não cadastrado
     Given eu estou na tela "Página inicial" 
     And eu preencho username com "llucasEmanuel"
     And eu preencho senha com "lukinhas#123"
-    And eu seleciono "Login"
-    Then eu recebo a mensagem "Conta não cadastrada. Impossível fazer login"
+    And eu seleciono "Logar"
+    Then eu recebo a mensagem "Conta não cadastrada. Impossível fazer login."
+
 Scenario: Remoção de usuário
     Given eu estou logado como "llucasEmanuel"
     And eu estou na tela "Meu perfil"
