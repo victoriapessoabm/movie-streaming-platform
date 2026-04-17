@@ -32,4 +32,15 @@ Feature: Categorias de Séries e Filmes
     And filmes de outros gêneros não devem ser exibidos
 
 
+Scenario: Acessar uma playlist inexistente
+  Given o usuário está na seção "Minhas playlists"
+  And a playlist "Filmes clássicos" não está cadastrada na seção "Minhas playlists"
+  When o usuário seleciona a playlist "Filmes clássicos"
+  Then o sistema deve exibir a mensagem "Playlist não encontrada"
 
+
+Scenario: Filtrar conteúdos por um gênero sem resultados
+  Given o usuário está visualizando a página da playlist "Filmes clássicos"
+  And a playlist "Filmes clássicos" não contém conteúdos do gênero "terror"
+  When o usuário aplica o filtro de gênero "terror" na playlist
+  Then o sistema deve exibir a mensagem "Nenhum conteúdo encontrado"
