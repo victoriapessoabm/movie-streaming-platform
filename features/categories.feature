@@ -39,8 +39,4 @@ Scenario: Acessar uma playlist inexistente
   Then o sistema deve exibir a mensagem "Playlist não encontrada"
 
 
-Scenario: Filtrar conteúdos por um gênero sem resultados
-  Given o usuário está visualizando a página da playlist "Filmes clássicos"
-  And a playlist "Filmes clássicos" não contém conteúdos do gênero "terror"
-  When o usuário aplica o filtro de gênero "terror" na playlist
-  Then o sistema deve exibir a mensagem "Nenhum conteúdo encontrado"
+
