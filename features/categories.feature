@@ -56,3 +56,12 @@ Feature: Categorias de Séries e Filmes
  
 <secao> = |Em alta| |Recomendados| | Assistidos recentemente|
 
+  Scenario: Visualizar conteúdos das seções do site com seção indisponível
+    Given o usuário está na página principal
+    And a seção "Em alta" não está disponível
+    When o usuário seleciona a visualização de "filmes" na seção "Em alta"
+    Then o sistema deve exibir a mensagem "Seção indisponível"
+    And os conteúdos da seção não devem ser exibidos
+    
+  
+
