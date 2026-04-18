@@ -51,12 +51,13 @@ Feature: Categorias de Séries e Filmes
     Then o sistema deve exibir a mensagem "Nenhum conteúdo encontrado"
     And nenhum conteúdo deve ser exibido na tela
 
-Scenario: Visualizar conteúdos das seções do site
-  Given vá para a página principal
-  And verifique que a seção "<secao>" está disponível
-  And o sistema deve ter um ranking "semanal" do tipo "filmes"
-  When selecione a visualização de "filmes" na seção "<secao>"
-  Then mostre os "10" conteúdos do tipo "filmes" na seção "<secao>"
-  And não mostre conteúdos de outros tipos em "<secao>"
-  
-  <secao> = |Em alta| |Recomendados| | Assistidos recentemente|
+  Scenario: Visualizar conteúdos das seções do site 
+    Given o usuário está na página principal 
+    And a seção “<secao>” está disponível
+    And existe um ranking “semanal” do tipo “filmes” definido pelo sistema
+    When o usuário seleciona a visualização de “filmes” na seção “<secao>”
+    Then a seção “<secao>” passa a exibir os “10” conteúdos do tipo “filmes”
+    And conteúdos de outros tipos não são exibidos em “<secao>”
+ 
+<secao> = |Em alta| |Recomendados| | Assistidos recentemente|
+
