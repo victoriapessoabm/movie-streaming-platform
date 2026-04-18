@@ -22,8 +22,7 @@ Feature: Categorias de Séries e Filmes
     Then a página da playlist "Filmes clássicos" deve ser exibida
     And os conteúdos da playlist "Filmes clássicos" devem ser apresentados ao usuário
 
-
-  Scenario: Filtrar filmes em uma playlist
+  Scenario: Filtrar conteúdos por um gênero em uma playlist
     Given a página da playlist "Filmes clássicos" está sendo visualizada
     And a playlist "Filmes clássicos" contém ao menos um filme do gênero "romance"
     And a playlist "Filmes clássicos" contém filmes de outro gênero
@@ -31,13 +30,13 @@ Feature: Categorias de Séries e Filmes
     Then apenas os filmes do gênero "romance" devem ser exibidos 
     And filmes de outros gêneros não devem ser exibidos
 
-  Scenario: Filtrar filmes em uma playlist
-    Given a página da playlist “Filmes clássicos” está sendo visualizada
-    And a playlist “Filmes clássicos” contém ao menos um filme do gênero “romance”
-    And a playlist “Filmes clássicos” contém filmes de outro gênero
-    When o filtro de gênero “romance” é aplicado na playlist
-    Then apenas os filmes do gênero “romance” devem ser exibidos 
-    And filmes de outros gêneros não devem ser exibidos
+  Scenario: Filtrar conteúdos por dois gêneros em uma playlist
+    Given o usuário está visualizando a página da playlist “Filmes clássicos”
+    And a playlist “Filmes clássicos” contém conteúdos dos gêneros “romance” e “drama”
+    And a playlist “Filmes clássicos” contém conteúdos de outros gêneros
+    When o usuário aplica os filtros de gênero “romance” e “drama” na playlist
+    Then apenas conteúdos dos gêneros “romance e “drama” são exibidos
+    And conteúdos de outros gêneros não devem ser exibidos
 
   Scenario: Acessar uma playlist inexistente
     Given o usuário está na seção "Minhas playlists"
@@ -50,4 +49,14 @@ Feature: Categorias de Séries e Filmes
     And a playlist "Filmes clássicos" não contém conteúdos do gênero "terror"
     When o usuário aplica o filtro de gênero "terror" na playlist
     Then o sistema deve exibir a mensagem "Nenhum conteúdo encontrado"
+    And nenhum conteúdo deve ser exibido na tela
 
+Scenario: Visualizar conteúdos das seções do site
+  Given vá para a página principal
+  And verifique que a seção "<secao>" está disponível
+  And o sistema deve ter um ranking "semanal" do tipo "filmes"
+  When selecione a visualização de "filmes" na seção "<secao>"
+  Then mostre os "10" conteúdos do tipo "filmes" na seção "<secao>"
+  And não mostre conteúdos de outros tipos em "<secao>"
+  
+  <secao> = |Em alta| |Recomendados| | Assistidos recentemente|
