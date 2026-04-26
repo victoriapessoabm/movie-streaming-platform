@@ -31,3 +31,20 @@ Scenario Outline: Visualizar playlists padrão na seção Minhas playlists
         | Favoritos       |
         | Assistir depois |
 
+
+Scenario Outline: Filme adicionado a uma playlist padrão pelo botão do filme
+    Given o usuário está na playlist "Catálogo"
+    And o usuário está visualizando o filme "<filme>" 
+    And a playlist padrão "<playlist>" existe na seção "Minhas playlists"
+    And o filme "<filme>" possui a opção "<opcao>"
+    And o filme "<filme>" ainda não está na playlist "<playlist>"
+    When o usuário seleciona a opção "<opcao>"
+    Then o sistema adiciona o filme "<filme>" à playlist "<playlist>"
+    And o sistema exibe uma mensagem de confirmação
+    And o filme "<filme>" passa a aparecer na playlist "<playlist>"
+
+    Examples:
+      | filme   | opcao                   | playlist        |
+      | Top Gun | Adicionar aos favoritos | Favoritos       |
+      | Top Gun | Assistir depois         | Assistir depois |
+
