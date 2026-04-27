@@ -20,11 +20,14 @@ Scenario Outline: Visualizar playlists padrão na seção Minhas playlists
     And o usuário está na página principal
     And a seção "Minhas playlists" está disponível
     And a playlist padrão "<playlist>" existe
+    And a playlist padrão "<playlist>" não pode ser removida
+    And a playlist padrão "<playlist>" não pode ser editada
     And a playlist padrão "<playlist>" está inicialmente vazia
     When o usuário acessa a seção "Minhas playlists"
     Then o sistema exibe a playlist "<playlist>"
     And a playlist "<playlist>" aparece como uma playlist padrão
-    And a playlist "<playlist>" não pode ser removida do sistema
+    And a playlist "<playlist>" não tem a opção de ser removida
+    And a playlist "<playlist>" não tem a opção de ser editada
     And a playlist "<playlist>" não possui filmes adicionados
 
     Examples:
@@ -71,6 +74,21 @@ Scenario: Editar o nome de uma playlist personalizada
     And a playlist "Maratonar no feriadão" aparece na seção "Minhas playlists"
     And a playlist "Maratonar nas férias" não aparece na seção "Minhas playlists"
     And o sistema exibe a mensagem "Playlist editada com sucesso!"
+
+
+Scenario: Editar o nome de uma playlist personalizada para um nome já existente na seção 
+    Given o usuário está na seção "Minhas playlists"
+    And existe a playlist personalizada "Maratonar nas férias"
+    And existe a playlist "Filmes favoritos do mês"
+    And existe a opção "Editar playlist" para a playlist "Maratonar nas férias"
+    When o usuário solicita a opção "Editar playlist" da playlist "Maratonar nas férias"
+    And o sistema exibe o formulário de edição da playlist "Maratonar nas férias"
+    And o usuário altera o campo de nome de "Maratonar nas férias" para "Filmes favoritos do mês"
+    And o usuário confirma a edição da playlist
+    Then o sistema não altera o campo de nome da playlist "Maratonar nas férias" para "Filmes favoritos do mês"
+    And a playlist "Maratonar nas férias" aparece na seção "Minhas playlists"
+    And a playlist "Filmes favoritos do mês" aparece na seção "Minhas playlists"
+    And o sistema exibe a mensagem "Já existe uma playlist com esse nome!"
 
 
 Scenario Outline: Adicionar filme a uma playlist padrão 
@@ -143,13 +161,34 @@ Scenario: Remover filme de uma playlist
     And o usuário seleciona o filme "Top Gun"
     And o usuário seleciona a opção do filme "Remover o filme da playlist"
     Then o sistema remove o filme "Top Gun" da playlist "Maratonar nas férias"
-    And o filme "Top Gun" deixa de aparecer dentro da playlist "Maratonar nas férias"
+    And o filme "Gran Torino" deixa de aparecer na playlist "Maratonar nas férias"
     And a playlist "Maratonar nas férias" continua existindo
 
 
+Scenario: Remover todos os filmes de uma playlist 
+    Given o usuário está na seção "Minhas playlists"
+    And existe a playlist personalizada "Maratonar nas férias"
+    And a playlist "Maratonar nas férias" pelo menos um filme
+    And existe a opção "Limpar playlist" na playlist "Maratonar nas férias"
+    When o usuário solicita a opção "Limpar playlist"
+    And o sistema exibe a confirmação de limpeza da playlist
+    And o usuário confirma a limpeza da playlist
+    Then o sistema remove todos os filmes da playlist "Maratonar nas férias"
+    And a playlist "Maratonar nas férias" continua aparecendo na seção "Minhas playlists"
+    And a playlist "Maratonar nas férias" fica vazia
+    And o sistema exibe a mensagem "Playlist limpa com sucesso!"
 
 
-
+Scenario: Remover todos os filmes de uma playlist vazia
+    Given o usuário está na seção "Minhas playlists"
+    And existe a playlist personalizada "Maratonar nas férias"
+    And a playlist "Maratonar nas férias" não possui filmes salvos
+    And existe a opção "Limpar playlist" na playlist "Maratonar nas férias"
+    When o usuário solicita a opção "Limpar playlist"
+    Then o sistema não remove nenhum filme da playlist "Maratonar nas férias"
+    And a playlist "Maratonar nas férias" continua vazia
+    And a playlist "Maratonar nas férias" continua aparecendo na seção "Minhas playlists"
+    And o sistema exibe a mensagem "A playlist já está vazia!"
 
   
   
