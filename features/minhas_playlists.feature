@@ -49,6 +49,16 @@ Scenario Outline: Filme adicionado a uma playlist padrão pelo botão do filme
       | Top Gun | Assistir depois         | Assistir depois |
 
 
+Scenario: Filme adicionado a uma playlist personalizada
+    Given o usuário está na playlist "Catálogo"
+    And o usuário está visualizando o filme "Gran Torino" 
+    And a playlist personalizada "Maratonar nas férias" existe na seção "Minhas playlists"
+    When o usuário seleciona a opção "Adicionar à playlist"
+    And o usuário escolhe a playlist "Maratonar nas férias"
+    Then o sistema adiciona o filme "Gran Torino" à playlist "Maratonar nas férias"
+    And o filme "Gran Torino" passa a aparecer na playlist "Maratonar nas férias"
+
+
 Scenario: Criação de uma nova playlist personalizada
   Given o usuário está na seção "Minhas playlists"
   And existe a opção "Adicionar playlist"
