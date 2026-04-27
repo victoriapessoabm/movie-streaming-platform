@@ -49,6 +49,31 @@ Scenario: Adicionar nova playlist personalizada
     And o sistema exibe a mensagem "Playlist adicionada com sucesso!" 
 
 
+Scenario: Adicionar playlist sem informar nome
+    Given o usuário está na seção "Minhas playlists"
+    And existe a opção "Adicionar playlist"
+    When o usuário solicita a opção "Adicionar playlist"
+    And o sistema exibe o formulário de "Criação de playlist"
+    And o usuário não preenche o campo de nome da playlist
+    And o usuário confirma o cadastro da playlist
+    Then o sistema não cria uma nova playlist
+    And o usuário permanece no formulário de "Criação de playlist"
+    And o sistema exibe a mensagem "O nome da playlist é obrigatório!"
+
+
+Scenario: Adicionar playlist com nome já existente
+    Given o usuário está na seção "Minhas playlists"
+    And existe a opção "Adicionar playlist"
+    And o usuário já possui uma playlist chamada "Maratonar nas férias"
+    When o usuário solicita a opção "Adicionar playlist"
+    And o sistema exibe o formulário de "Criação de playlist"
+    And o usuário preenche o campo de nome da playlist com "Maratonar nas férias"
+    And o usuário confirma o cadastro da playlist
+    Then o sistema não cria uma nova playlist
+    And a seção "Minhas playlists" mantém apenas uma playlist chamada "Maratonar nas férias"
+    And o sistema exibe a mensagem "Já existe uma playlist com esse nome!"
+
+
 Scenario: Remover uma playlist personalizada
     Given o usuário está na seção "Minhas playlists"
     And existe a playlist personalizada "Maratonar nas férias"
