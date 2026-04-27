@@ -48,3 +48,19 @@ Scenario Outline: Filme adicionado a uma playlist padrão pelo botão do filme
       | Top Gun | Adicionar aos favoritos | Favoritos       |
       | Top Gun | Assistir depois         | Assistir depois |
 
+
+Scenario: Criação de uma nova playlist personalizada
+  Given o usuário está na seção "Minhas playlists"
+  And existe a opção "Adicionar playlist"
+  And o usuário não possui uma playlist chamada "Maratonar nas férias"
+  When o usuário solicita a opção "Adicionar playlist"
+  And o sistema exibe o formulário de "Criação de playlist"
+  And o usuário preenche o campo de nome da playlist com "Maratonar nas férias"
+  And o usuário confirma o cadastro da playlist
+  Then o sistema cria a playlist "Maratonar nas férias"
+  And a playlist "Maratonar nas férias" aparece na seção "Minhas playlists"
+
+
+
+  
+  
