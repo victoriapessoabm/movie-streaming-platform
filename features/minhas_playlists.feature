@@ -1,4 +1,4 @@
-Scenario Outline: Visualização de seções e playlists disponíveis na página principal
+Scenario Outline: Visualizar seções e playlists disponíveis na página principal
     Given o usuário está logado na plataforma
     And o usuário está na página principal
     And o elemento "<item>" do tipo "<tipo>" está disponível na página principal
@@ -24,12 +24,53 @@ Scenario Outline: Visualizar playlists padrão na seção Minhas playlists
     When o usuário acessa a seção "Minhas playlists"
     Then o sistema exibe a playlist "<playlist>"
     And a playlist "<playlist>" aparece como uma playlist padrão
+    And a playlist "<playlist>" não pode ser removida do sistema
     And a playlist "<playlist>" não possui filmes adicionados
 
     Examples:
         | playlist        |
         | Favoritos       |
         | Assistir depois |
+
+
+Scenario: Adicionar nova playlist personalizada
+    Given o usuário está na seção "Minhas playlists"
+    And existe a opção "Adicionar playlist"
+    And o usuário não possui uma playlist chamada "Maratonar nas férias"
+    When o usuário solicita a opção "Adicionar playlist"
+    And o sistema exibe o formulário de "Criação de playlist"
+    And o usuário preenche o campo de nome da playlist com "Maratonar nas férias"
+    And o usuário confirma o cadastro da playlist
+    Then o sistema cria a playlist "Maratonar nas férias"
+    And a playlist "Maratonar nas férias" aparece na seção "Minhas playlists"
+    And o sistema exibe a mensagem "Playlist adicionada com sucesso!" 
+
+
+Scenario: Remover uma playlist personalizada
+    Given o usuário está na seção "Minhas playlists"
+    And existe a playlist personalizada "Maratonar nas férias"
+    And existe a opção "Remover playlist" na playlist "Maratonar nas férias"
+    When o usuário solicita a opção "Remover playlist"
+    And o sistema exibe a confirmação de remoção da playlist
+    And o usuário confirma a remoção da playlist
+    Then o sistema remove a playlist "Maratonar nas férias"
+    And a playlist "Maratonar nas férias" não aparece na seção "Minhas playlists"
+    And o sistema exibe a mensagem "Playlist removida com sucesso!" 
+
+
+Scenario: Editar o nome de uma playlist personalizada
+    Given o usuário está na seção "Minhas playlists"
+    And existe a playlist personalizada de nome "Maratonar nas férias"
+    And existe a opção "Editar playlist" para a playlist "Maratonar nas férias"
+    And o usuário não possui uma playlist de nome "Maratonar no feriadão" na seção "Minhas playlists"
+    When o usuário solicita a opção "Editar playlist" da playlist "Maratonar nas férias"
+    And o sistema exibe o formulário de edição da playlist "Maratonar nas férias"
+    And o usuário altera o campo de nome de "Maratonar nas férias" para "Maratonar no feriadão"
+    And o usuário confirma a edição da playlist 
+    Then o sistema altera o campo de nome da playlist para "Maratonar no feriadão"
+    And a playlist "Maratonar no feriadão" aparece na seção "Minhas playlists"
+    And a playlist "Maratonar nas férias" não aparece na seção "Minhas playlists"
+    And o sistema exibe a mensagem "Playlist editada com sucesso!"
 
 
 Scenario Outline: Adicionar filme a uma playlist padrão 
@@ -106,16 +147,7 @@ Scenario: Remover filme de uma playlist
     And a playlist "Maratonar nas férias" continua existindo
 
 
-Scenario: Criação de uma nova playlist personalizada
-    Given o usuário está na seção "Minhas playlists"
-    And existe a opção "Adicionar playlist"
-    And o usuário não possui uma playlist chamada "Maratonar nas férias"
-    When o usuário solicita a opção "Adicionar playlist"
-    And o sistema exibe o formulário de "Criação de playlist"
-    And o usuário preenche o campo de nome da playlist com "Maratonar nas férias"
-    And o usuário confirma o cadastro da playlist
-    Then o sistema cria a playlist "Maratonar nas férias"
-    And a playlist "Maratonar nas férias" aparece na seção "Minhas playlists"
+
 
 
 
