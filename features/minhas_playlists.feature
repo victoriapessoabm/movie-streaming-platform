@@ -43,32 +43,45 @@ Scenario: Adicionar nova playlist personalizada
     When o usuário solicita a opção "Adicionar playlist"
     And o sistema exibe o formulário de "Criação de playlist"
     And o usuário preenche o campo de nome da playlist com "Maratonar nas férias"
-    And o usuário confirma o cadastro da playlist
+    And o usuário seleciona a opção "Salvar"
     Then o sistema cria a playlist "Maratonar nas férias"
     And a playlist "Maratonar nas férias" aparece na seção "Minhas playlists"
     And o sistema exibe a mensagem "Playlist adicionada com sucesso!" 
 
 
-Scenario: Adicionar playlist sem informar nome
+Scenario: Cancelar criação de nova playlist personalizada
+    Given o usuário está na seção "Minhas playlists"
+    And existe a opção "Adicionar playlist"
+    And o usuário não possui uma playlist chamada "Maratonar nas férias"
+    When o usuário solicita a opção "Adicionar playlist"
+    And o sistema exibe o formulário de "Criação de playlist"
+    And o sistema exibe as opções "Salvar" e "Cancelar"
+    And o usuário preenche o campo de nome da playlist com "Maratonar nas férias"
+    And o usuário seleciona a opção "Cancelar"
+    Then o sistema não cria a playlist "Maratonar nas férias"
+    And a playlist "Maratonar nas férias" não aparece na seção "Minhas playlists"
+
+
+Scenario: Adicionar playlist personalizada sem informar nome
     Given o usuário está na seção "Minhas playlists"
     And existe a opção "Adicionar playlist"
     When o usuário solicita a opção "Adicionar playlist"
     And o sistema exibe o formulário de "Criação de playlist"
     And o usuário não preenche o campo de nome da playlist
-    And o usuário confirma o cadastro da playlist
+    And o usuário seleciona a opção "Salvar"
     Then o sistema não cria uma nova playlist
     And o usuário permanece no formulário de "Criação de playlist"
     And o sistema exibe a mensagem "O nome da playlist é obrigatório!"
 
 
-Scenario: Adicionar playlist com nome já existente
+Scenario: Adicionar playlist personalizada com nome já existente
     Given o usuário está na seção "Minhas playlists"
     And existe a opção "Adicionar playlist"
     And o usuário já possui uma playlist chamada "Maratonar nas férias"
     When o usuário solicita a opção "Adicionar playlist"
     And o sistema exibe o formulário de "Criação de playlist"
     And o usuário preenche o campo de nome da playlist com "Maratonar nas férias"
-    And o usuário confirma o cadastro da playlist
+    And o usuário seleciona a opção "Salvar"
     Then o sistema não cria uma nova playlist
     And a seção "Minhas playlists" mantém apenas uma playlist chamada "Maratonar nas férias"
     And o sistema exibe a mensagem "Já existe uma playlist com esse nome!"
@@ -79,8 +92,6 @@ Scenario: Remover uma playlist personalizada
     And existe a playlist personalizada "Maratonar nas férias"
     And existe a opção "Remover playlist" na playlist "Maratonar nas férias"
     When o usuário solicita a opção "Remover playlist"
-    And o sistema exibe a confirmação de remoção da playlist
-    And o usuário confirma a remoção da playlist
     Then o sistema remove a playlist "Maratonar nas férias"
     And a playlist "Maratonar nas férias" não aparece na seção "Minhas playlists"
     And o sistema exibe a mensagem "Playlist removida com sucesso!" 
@@ -92,9 +103,9 @@ Scenario: Editar o nome de uma playlist personalizada
     And existe a opção "Editar playlist" para a playlist "Maratonar nas férias"
     And o usuário não possui uma playlist de nome "Maratonar no feriadão" na seção "Minhas playlists"
     When o usuário solicita a opção "Editar playlist" da playlist "Maratonar nas férias"
-    And o sistema exibe o formulário de edição da playlist "Maratonar nas férias"
+    And o sistema exibe o formulário de "Edição de playlist" da playlist "Maratonar nas férias"
     And o usuário altera o campo de nome de "Maratonar nas férias" para "Maratonar no feriadão"
-    And o usuário confirma a edição da playlist 
+    And o usuário seleciona a opção "Salvar"
     Then o sistema altera o campo de nome da playlist para "Maratonar no feriadão"
     And a playlist "Maratonar no feriadão" aparece na seção "Minhas playlists"
     And a playlist "Maratonar nas férias" não aparece na seção "Minhas playlists"
@@ -107,13 +118,27 @@ Scenario: Editar o nome de uma playlist personalizada para um nome já existente
     And existe a playlist "Filmes favoritos do mês"
     And existe a opção "Editar playlist" para a playlist "Maratonar nas férias"
     When o usuário solicita a opção "Editar playlist" da playlist "Maratonar nas férias"
-    And o sistema exibe o formulário de edição da playlist "Maratonar nas férias"
+    And o sistema exibe o formulário de "Edição de playlist" da playlist "Maratonar nas férias"
     And o usuário altera o campo de nome de "Maratonar nas férias" para "Filmes favoritos do mês"
-    And o usuário confirma a edição da playlist
+    And o usuário seleciona a opção "Salvar"
     Then o sistema não altera o campo de nome da playlist "Maratonar nas férias" para "Filmes favoritos do mês"
     And a playlist "Maratonar nas férias" aparece na seção "Minhas playlists"
     And a playlist "Filmes favoritos do mês" aparece na seção "Minhas playlists"
     And o sistema exibe a mensagem "Já existe uma playlist com esse nome!"
+
+
+Scenario: Cancelar edição do nome de uma playlist personalizada
+    Given o usuário está na seção "Minhas playlists"
+    And existe a playlist personalizada de nome "Maratonar nas férias"
+    And existe a opção "Editar playlist" para a playlist "Maratonar nas férias"
+    And o usuário não possui uma playlist de nome "Maratonar no feriadão" na seção "Minhas playlists"
+    When o usuário solicita a opção "Editar playlist" da playlist "Maratonar nas férias"
+    And o sistema exibe o formulário de "Edição de playlist" da playlist "Maratonar nas férias"
+    And o usuário altera o campo de nome de "Maratonar nas férias" para "Maratonar no feriadão"
+    And o usuário seleciona a opção "Cancelar"
+    Then o sistema não altera o campo de nome da playlist
+    And a playlist "Maratonar nas férias" continua aparecendo na seção "Minhas playlists"
+    And a playlist "Maratonar no feriadão" não aparece na seção "Minhas playlists"
 
 
 Scenario Outline: Adicionar filme a uma playlist padrão 
@@ -196,8 +221,6 @@ Scenario: Remover todos os filmes de uma playlist
     And a playlist "Maratonar nas férias" pelo menos um filme
     And existe a opção "Limpar playlist" na playlist "Maratonar nas férias"
     When o usuário solicita a opção "Limpar playlist"
-    And o sistema exibe a confirmação de limpeza da playlist
-    And o usuário confirma a limpeza da playlist
     Then o sistema remove todos os filmes da playlist "Maratonar nas férias"
     And a playlist "Maratonar nas férias" continua aparecendo na seção "Minhas playlists"
     And a playlist "Maratonar nas férias" fica vazia
