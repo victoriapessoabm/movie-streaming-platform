@@ -30,11 +30,10 @@ Scenario Outline: Visualizar playlists padrão na seção Minhas playlists
     Given o usuário está logado na plataforma
     And o usuário está na página principal
     And a seção "Minhas playlists" está disponível
-    And a playlist padrão "<playlist>" existe
+    When o usuário acessa a seção "Minhas playlists"
+    And a playlist padrão "<playlist>" deve ser exibida 
     And a playlist padrão "<playlist>" não pode ser removida
     And a playlist padrão "<playlist>" não pode ser editada
-    And a playlist padrão "<playlist>" está inicialmente vazia
-    When o usuário acessa a seção "Minhas playlists"
     Then o sistema exibe a playlist "<playlist>"
     And a playlist "<playlist>" aparece como uma playlist padrão
     And a playlist "<playlist>" não tem a opção de ser removida
