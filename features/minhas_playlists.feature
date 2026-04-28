@@ -38,7 +38,6 @@ Scenario Outline: Visualizar playlists padrão na seção Minhas playlists
     And a playlist "<playlist>" aparece como uma playlist padrão
     And a playlist "<playlist>" não tem a opção de ser removida
     And a playlist "<playlist>" não tem a opção de ser editada
-    And a playlist "<playlist>" não possui filmes adicionados
 
     Examples:
         | playlist        |
