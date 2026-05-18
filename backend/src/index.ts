@@ -1,9 +1,16 @@
 import express, { Request, Response } from "express";
-import { router } from "./routes/movie-routes";
+import { router as movieRouter } from "./routes/movie-routes";
+import { router as playlistRouter } from "./routes/playlist-route";
 
 const app = express();
+
 app.use(express.json());
-app.use("/", router);
+
+// Rotas de filmes
+app.use("/", movieRouter);
+
+// Rotas de playlists
+app.use("/", playlistRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.json({ mensagem: "API funcionando!" });

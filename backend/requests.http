@@ -35,3 +35,63 @@ Content-Type: application/json
 
 ### Deletar Filme
 DELETE http://localhost:3000/movies/O Senhor dos Anéis
+
+###
+
+### Listar Playlists de um Usuário
+GET http://localhost:3000/users/user-123/playlists
+
+###
+
+
+
+### Criar Nova Playlist
+POST http://localhost:3000/playlists
+Content-Type: application/json
+
+{
+  "name": "Maratonar nas férias",
+  "userId": "user-123"
+}
+
+###
+
+### Listar Playlists de um Usuário
+GET http://localhost:3000/users/user-123/playlists
+
+###
+
+### Criar Playlist com Nome Repetido
+POST http://localhost:3000/playlists
+Content-Type: application/json
+
+{
+  "name": "Maratonar nas férias",
+  "userId": "user-123"
+}
+
+###
+
+### Criar Playlist sem Nome
+POST http://localhost:3000/playlists
+Content-Type: application/json
+
+{
+  "name": "",
+  "userId": "user-123"
+}
+
+###
+
+### Atualizar Nome da Playlist
+PATCH http://localhost:3000/playlists/COLOQUE_AQUI_O_ID_DA_PLAYLIST
+Content-Type: application/json
+
+{
+  "name": "Maratonar no feriadão"
+}
+
+###
+
+### Deletar Playlist
+DELETE http://localhost:3000/playlists/COLOQUE_AQUI_O_ID_DA_PLAYLIST
